@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'robot_manipulador_teleop = mi_robot_manipulador_2.robot_manipulador_teleop:main',
-            'robot_manipulador_teleop_test = mi_robot_manipulador_2.robot_manipulador_teleop:main'
+            'robot_manipulador_teleop = mi_robot_manipulador_2.robot_manipulator_teleop:main',
+            'robot_manipulador_teleop_test = mi_robot_manipulador_2.robot_manipulator_teleop:main'
         ],
     },
 )
