@@ -9,8 +9,8 @@ setup.py
 ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/top_level.txt
 ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/zip-safe
 mi_robot_manipulador_2/__init__.py
-mi_robot_manipulador_2/robot_manipulador_teleop.py
-mi_robot_manipulador_2/robot_manipulador_teleop_test.py
+mi_robot_manipulador_2/robot_manipulator_teleop.py
+mi_robot_manipulador_2/robot_manipulator_teleop_test.py
 resource/mi_robot_manipulador_2
 test/test_copyright.py
 test/test_flake8.py

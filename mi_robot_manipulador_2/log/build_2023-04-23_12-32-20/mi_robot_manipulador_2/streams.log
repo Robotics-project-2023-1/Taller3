@@ -1,0 +1,24 @@
+[0.982s] Invoking command in '/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/src/mi_robot_manipulador_2': PYTHONPATH=/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/prefix_override:/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/mi_robot_manipulador_2 build --build-base /home/robotica/Desktop/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/build install --record /home/robotica/Desktop/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/install.log --single-version-externally-managed
+[1.318s] running egg_info
+[1.320s] writing ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/PKG-INFO
+[1.323s] writing dependency_links to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/dependency_links.txt
+[1.326s] writing entry points to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/entry_points.txt
+[1.328s] writing requirements to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/requires.txt
+[1.329s] writing top-level names to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/top_level.txt
+[1.340s] reading manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'
+[1.344s] writing manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'
+[1.346s] running build
+[1.347s] running build_py
+[1.349s] running install
+[1.351s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.351s]   warnings.warn(
+[1.353s] running install_lib
+[1.356s] running install_data
+[1.358s] running install_egg_info
+[1.361s] removing '/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2-0.0.0-py3.10.egg-info' (and everything under it)
+[1.376s] Copying ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info to /home/robotica/Desktop/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2-0.0.0-py3.10.egg-info
+[1.379s] running install_scripts
+[1.410s] Installing robot_manipulator_teleop script to /home/robotica/Desktop/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[1.412s] Installing robot_manipulator_teleop_test script to /home/robotica/Desktop/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[1.413s] writing list of installed files to '/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/install.log'
+[1.440s] Invoked command in '/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/src/mi_robot_manipulador_2' returned '0': PYTHONPATH=/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/prefix_override:/home/robotica/Desktop/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/mi_robot_manipulador_2 build --build-base /home/robotica/Desktop/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/build install --record /home/robotica/Desktop/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/install.log --single-version-externally-managed
