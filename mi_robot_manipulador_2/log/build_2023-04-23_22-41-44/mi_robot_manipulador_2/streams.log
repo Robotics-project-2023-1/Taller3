@@ -1,0 +1,27 @@
+[3.073s] Invoking command in '/home/robotica/Taller3/mi_robot_manipulador_2/src/mi_robot_manipulador_2': PYTHONPATH=/home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/prefix_override:/home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/mi_robot_manipulador_2 build --build-base /home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/build install --record /home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/install.log --single-version-externally-managed
+[3.764s] running egg_info
+[3.768s] writing ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/PKG-INFO
+[3.770s] writing dependency_links to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/dependency_links.txt
+[3.772s] writing entry points to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/entry_points.txt
+[3.775s] writing requirements to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/requires.txt
+[3.776s] writing top-level names to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/top_level.txt
+[3.782s] reading manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'
+[3.788s] writing manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'
+[3.790s] running build
+[3.790s] running build_py
+[3.794s] copying mi_robot_manipulador_2/robot_manipulator_teleop.py -> /home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2
+[3.795s] running install
+[3.795s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[3.796s]   warnings.warn(
+[3.796s] running install_lib
+[3.800s] copying /home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/robot_manipulator_teleop.py -> /home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2
+[3.801s] byte-compiling /home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/robot_manipulator_teleop.py to robot_manipulator_teleop.cpython-310.pyc
+[3.805s] running install_data
+[3.812s] running install_egg_info
+[3.820s] removing '/home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2-0.0.0-py3.10.egg-info' (and everything under it)
+[3.826s] Copying ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info to /home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2-0.0.0-py3.10.egg-info
+[3.831s] running install_scripts
+[3.906s] Installing robot_manipulator_teleop script to /home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[3.908s] Installing robot_manipulator_teleop_test script to /home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[3.912s] writing list of installed files to '/home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/install.log'
+[4.044s] Invoked command in '/home/robotica/Taller3/mi_robot_manipulador_2/src/mi_robot_manipulador_2' returned '0': PYTHONPATH=/home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/prefix_override:/home/robotica/Taller3/mi_robot_manipulador_2/install/mi_robot_manipulador_2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/mi_robot_manipulador_2 build --build-base /home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/build install --record /home/robotica/Taller3/mi_robot_manipulador_2/build/mi_robot_manipulador_2/install.log --single-version-externally-managed

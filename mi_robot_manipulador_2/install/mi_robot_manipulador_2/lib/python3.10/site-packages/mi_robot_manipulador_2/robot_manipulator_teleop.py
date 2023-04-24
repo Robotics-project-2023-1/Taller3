@@ -52,9 +52,9 @@ class RobotManipulatorTeleop(Node):
                 if key in ['w', 's', 'a', 'd', 'q', 'e', 'x', 'p', 'r']:
                     print("Tecla Presionada:", key)
                     break
-                else:
+                elif key not in ['\t', '\n', '\r']: # Evitar la lectura de teclas deshabilitadas
                     print("Tecla Deshabilitada")
-            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
         return key
 
 
@@ -101,14 +101,13 @@ class RobotManipulatorTeleop(Node):
         self.get_logger().info('Use r to set the zone to place')
         self.get_logger().info('Press Ctrl+C to abort the application') # Agregar información al usuario
         self.teleop_loop()
+        signal.signal(signal.SIGINT, signal.SIG_DFL)  # Agregar esta línea
 
 
 def main(args=None):
     rclpy.init(args=args)
     joint_speeds = [0.1, 0.1, 0.1] # Velocidades de movimiento para cada eje
     robot_teleop = RobotManipulatorTeleop(joint_speeds)
-    
-    
     robot_teleop.run()
     rclpy.shutdown()
 
