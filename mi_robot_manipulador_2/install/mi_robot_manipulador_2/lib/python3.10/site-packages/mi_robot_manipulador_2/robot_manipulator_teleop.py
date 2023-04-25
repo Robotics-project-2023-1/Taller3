@@ -3,7 +3,6 @@ from rclpy.node import Node
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3
 import sys, termios, tty, select
-import signal 
 
 class RobotManipulatorTeleop(Node):
     def __init__(self, joint_speeds):
@@ -12,6 +11,7 @@ class RobotManipulatorTeleop(Node):
         self.publisher_goal_ = self.create_publisher(Vector3, '/robot_manipulator_goal', 10)
         self.publisher_zone_ = self.create_publisher(String, '/robot_manipulator_zone', 10)
         self.joint_speeds = joint_speeds
+        self.selected_motor = None
         self.get_logger().info('Robot Manipulator Teleop node initialized')
 
     def publish_robot_position(self, x, y, z):
@@ -40,76 +40,78 @@ class RobotManipulatorTeleop(Node):
         self.publisher_zone_.publish(zone_msg)
 
     def get_input(self):
-        # Leer la entrada del usuario sin esperar por un retorno de carro
-        settings = termios.tcgetattr(sys.stdin)
-        tty.setraw(sys.stdin.fileno())
-        rclpy.spin_once(self)
+        # Mostrar opciones de selección de motor
+        print("Seleccione un motor (1, 2 o 3): ")
+        motor = None
+        while motor not in ['1', '2', '3']:
+            motor = input()
+        self.selected_motor = int(motor)
 
-        while True:
-            rclpy.spin_once(self)
-            if select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], []):
-                key = sys.stdin.read(1)
-                if key in ['w', 's', 'a', 'd', 'q', 'e', 'x', 'p', 'r']:
-                    print("Tecla Presionada:", key)
-                    break
-                elif key not in ['\t', '\n', '\r']: # Evitar la lectura de teclas deshabilitadas
-                    print("Tecla Deshabilitada")
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-        return key
+        # Obtener la cantidad de pasos
+        print("Ingrese la cantidad de pasos (mayor a 0): ")
+        steps = None
+        while steps is None or steps <= 0:
+            try:
+                steps = int(input())
+            except ValueError:
+                print("Ingrese un número entero mayor a 0.")
+        
+        # Obtener la dirección de movimiento
+        print("Seleccione la dirección de movimiento (-1, 0, 1): ")
+        direction = None
+        while direction not in ['-1', '0', '1']:
+            direction = input()
+        direction = int(direction)
 
+        return self.selected_motor, steps, direction
 
-    def teleop_loop(self):
-        rate = self.create_rate(10) # Frecuencia de publicación de mensajes
-        x = 0.0
-        y = 0.0
-        z = 0.0
-
-        while rclpy.ok():
-            key = self.get_input()
-
-            if key == 'w':
-                x += self.joint_speeds[0]
-            elif key == 's':
-                x -= self.joint_speeds[0]
-            elif key == 'a':
-                y += self.joint_speeds[1]
-            elif key == 'd':
-                y -= self.joint_speeds[1]
-            elif key == 'q':
-                z += self.joint_speeds[2]
-            elif key == 'e':
-                z -= self.joint_speeds[2]
-            elif key == 'r':
-                self.publish_robot_position(x, y, z) # Publicar posición actual del robot
-            elif key == 'g':
-                self.publish_robot_goal(x, y, z) # Publicar posición deseada del robot
-            elif key == 'z':
-                zone = input("Ingrese el nombre de la zona: ")
-                self.publish_robot_zone(zone) # Publicar nombre de la zona
-
-            # Imprimir las coordenadas actuales del end-effector
-            print("Coordenadas del end-effector (x, y, z):", x, y, z)
-
-            rate.sleep()
-
-
-    def run(self):
-        self.get_logger().info('Robot Manipulator Teleop node started')
-        self.get_logger().info('Use w, s, a, d, q, e to control the robot end-effector position')
-        self.get_logger().info('Use x to reset the position')
-        self.get_logger().info('Use p to set the zone to pick')
-        self.get_logger().info('Use r to set the zone to place')
-        self.get_logger().info('Press Ctrl+C to abort the application') # Agregar información al usuario
-        self.teleop_loop()
-        signal.signal(signal.SIGINT, signal.SIG_DFL)  # Agregar esta línea
 
 
 def main(args=None):
     rclpy.init(args=args)
-    joint_speeds = [0.1, 0.1, 0.1] # Velocidades de movimiento para cada eje
-    robot_teleop = RobotManipulatorTeleop(joint_speeds)
-    robot_teleop.run()
-    rclpy.shutdown()
+    joint_speeds = [0.1, 0.1, 0.1] # Velocidades de los joints en cada dirección
+    teleop_node = RobotManipulatorTeleop(joint_speeds)
+    motor, steps, direction = teleop_node.get_input()
+
+
+    # Mover el motor seleccionado en la dirección indicada
+    if direction == -1:
+        print("Moviendo motor", motor, "hacia atrás", steps, "pasos.")
+        # Lógica para mover el motor hacia atrás
+    elif direction == 0:
+        print("No se mueve el motor", motor)
+    elif direction == 1:
+        print("Moviendo motor", motor, "hacia adelante", steps, "pasos.")
+        # Lógica para mover el motor hacia adelante
 
 if __name__ == '__main__':
     main()
+
+"""
+    def get_input(self):
+        # Mostrar opciones de selección de motor
+        print("Seleccione un motor (1, 2 o 3): ")
+        motor = None
+        while motor not in ['1', '2', '3']:
+            motor = input()
+        self.selected_motor = int(motor)
+
+        # Obtener la cantidad de pasos
+        print("Ingrese la cantidad de pasos (mayor a 0): ")
+        steps = None
+        while steps is None or steps <= 0:
+            try:
+                steps = int(input())
+            except ValueError:
+                print("Ingrese un número entero mayor a 0.")
+        return self.selected_motor, steps
+
+def main(args=None):
+    rclpy.init(args=args)
+    joint_speeds = [0.1, 0.1, 0.1] # Velocidades de los joints en cada dirección
+    teleop_node = RobotManipulatorTeleop(joint_speeds)
+    motor, steps = teleop_node.get_input()
+
+if __name__ == '__main__':
+    main()
+"""

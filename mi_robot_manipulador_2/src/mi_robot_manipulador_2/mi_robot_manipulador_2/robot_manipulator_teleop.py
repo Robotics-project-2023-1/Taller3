@@ -55,6 +55,55 @@ class RobotManipulatorTeleop(Node):
                 steps = int(input())
             except ValueError:
                 print("Ingrese un número entero mayor a 0.")
+        
+        # Obtener la dirección de movimiento
+        print("Seleccione la dirección de movimiento (-1, 0, 1): ")
+        direction = None
+        while direction not in ['-1', '0', '1']:
+            direction = input()
+        direction = int(direction)
+
+        return self.selected_motor, steps, direction
+
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    joint_speeds = [0.1, 0.1, 0.1] # Velocidades de los joints en cada dirección
+    teleop_node = RobotManipulatorTeleop(joint_speeds)
+    motor, steps, direction = teleop_node.get_input()
+
+
+    # Mover el motor seleccionado en la dirección indicada
+    if direction == -1:
+        print("Moviendo motor", motor, "hacia atrás", steps, "pasos.")
+        # Lógica para mover el motor hacia atrás
+    elif direction == 0:
+        print("No se mueve el motor", motor)
+    elif direction == 1:
+        print("Moviendo motor", motor, "hacia adelante", steps, "pasos.")
+        # Lógica para mover el motor hacia adelante
+
+if __name__ == '__main__':
+    main()
+
+"""
+    def get_input(self):
+        # Mostrar opciones de selección de motor
+        print("Seleccione un motor (1, 2 o 3): ")
+        motor = None
+        while motor not in ['1', '2', '3']:
+            motor = input()
+        self.selected_motor = int(motor)
+
+        # Obtener la cantidad de pasos
+        print("Ingrese la cantidad de pasos (mayor a 0): ")
+        steps = None
+        while steps is None or steps <= 0:
+            try:
+                steps = int(input())
+            except ValueError:
+                print("Ingrese un número entero mayor a 0.")
         return self.selected_motor, steps
 
 def main(args=None):
@@ -65,3 +114,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+"""
