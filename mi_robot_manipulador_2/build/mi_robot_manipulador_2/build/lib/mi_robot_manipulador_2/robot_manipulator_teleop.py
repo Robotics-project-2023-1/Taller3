@@ -22,6 +22,10 @@ class RobotManipulatorTeleop(Node):
         position_msg.z = z
         # Publicar el mensaje en el tópico '/robot_manipulator_position'
         self.publisher_position_.publish(position_msg)
+        
+        # Imprimir las coordenadas en la consola
+        print("Posición actual del brazo robótico: ({x}, {y}, {z})")
+
 
     def publish_robot_goal(self, x, y, z):
         # Crear un mensaje Vector3 con la posición deseada del end-effector
@@ -65,6 +69,12 @@ class RobotManipulatorTeleop(Node):
 
         return self.selected_motor, steps, direction
 
+    def callback_position(self, position_msg):
+        # Actualizar la posición actual del robot
+        self.robot_position = (position_msg.x, position_msg.y, position_msg.z)
+        # Imprimir la posición actual del robot
+        print("Posición actual del robot: ({position_msg.x}, {position_msg.y}, {position_msg.z})")
+
 
 
 def main(args=None):
@@ -73,6 +83,9 @@ def main(args=None):
     teleop_node = RobotManipulatorTeleop(joint_speeds)
     motor, steps, direction = teleop_node.get_input()
 
+    # Suscribirse al tópico '/robot_manipulator_position' para recibir las posiciones publicadas
+    subscription = teleop_node.create_subscription(Vector3, '/robot_manipulator_position', teleop_node.callback_position, 10)
+    subscription  # Prevent unused variable warning
 
     # Mover el motor seleccionado en la dirección indicada
     if direction == -1:
@@ -83,6 +96,9 @@ def main(args=None):
     elif direction == 1:
         print("Moviendo motor", motor, "hacia adelante", steps, "pasos.")
         # Lógica para mover el motor hacia adelante
+    
+    
+
 
 if __name__ == '__main__':
     main()
