@@ -1,252 +1,261 @@
-import tkinter as tk #libreria para crear la interfaz
-from tkinter import filedialog
-from tkinter import messagebox
+import tkinter as tk
+from tkinter import PhotoImage
 from tkinter import Canvas
-from PIL import Image, ImageTk, ImageGrab
+from tkinter import filedialog
 import pyautogui
-from pynput import keyboard
-import os # para acceder a los archivos de la carpeta
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist   #Tipo de mensaje que se publica el topico robot_position
 from std_msgs.msg import String #Tipo de mensaje recibido en el topico robot_bot_teclas
 from threading import Thread  #Crear threads para correr dos cosas simultaneamente
 from time import sleep
-from robot_interfaces.srv import Reproducir #servicio
 
 
-global quiero_txt
-global posiciones
 posiciones = [0,0,0]
-quiero_txt = False
-nombre_txt = None 
-guardar_movimientos = False
-filename = None
-folder_path = None
-tecla_presionada = '.'
 keys_pressed = []
-#
+tecla_presionada = '.'
 
-def creo_interfaz(): #esta funcion corre como un segundo hilo
-    print("Creo la interfaz")
-    root = tk.Tk()
-    root.geometry('850x600')
-    root.title("robot_teleop")
-    root.configure(bg='#40CFFF')
-    name = "brazo_robotico"
-    archivo = os.path.dirname(__file__)
-    f = os.path.expanduser(archivo + '/' + name + '.jpeg')
-    #img = Image.open(f) #modificado para encontrar el path de la foto, si no les sirve descomenten la linea de abajo y comenten esto
-    img = Image.open('/home/robotica/Taller3/mi_robot_manipulador_2/src/mi_robot_manipulador_2/mi_robot_manipulador_2.jpeg')
-    imagen = img.resize((400,400))
-    new_image = ImageTk.PhotoImage(imagen)
-    etiqueta_imagen = tk.Label(root, image=new_image)
-    etiqueta_imagen.place(x=250,y=110)
-    ancho = 850
-    alto = 600
-    pos_x = 400
-    pos_y = 300
 
-    ###### draw
-        # canvas = Canvas(root)
-    canvas = Canvas(root, width = ancho, height = alto)
-    canvas.configure(bg='##40CFFF')
-    canvas.pack()
+#Thread
+def create_interface():
+    print("Creando interfaz")
+        # Crear la ventana principal
+    ventana = tk.Tk()
 
-        # canvas.create_image(10,10,anchor=tk.NW,image=new_image)
+    # Personalizar la ventana
+    ventana.title("robot_manupulator_interface")
+    ventana.geometry("950x600")
+    ventana.configure(bg='#ff8000')
+    #Botón
 
-        # img = Image.open("gato.png")
-        # imagen = img.resize((400,400))
-        # new_image = ImageTk.PhotoImage(imagen)
-    canvas.create_image(pos_x,pos_y,image=new_image)
 
-    x1 = pos_x
-    y1 = pos_y
-    x2 = pos_x + 5
-    y2 = pos_y + 5
 
-    text_frame_grafica = tk.Text(root, height=1, width=35,font=("Roboto", 15))
-    text_frame_grafica.place(x=350,y=26)
+    #Text_Frame
+    text_frame = tk.Text(ventana, width = 35, height = 1, font=("Courier",16))
+    text_frame.place(x = 470, y = 50)
 
-    label_grafica = tk.Label(root, text="Introduce el nombre de la imagen:",bg='#40CFFF',font=("Roboto", 15))
-    label_grafica.place(x=0,y=26)
+    #Label para text frame
+    label = tk.Label(ventana, text="Selecciona nombre para el pantallazo:", font=("Courier",15), bg = "#ff8000")
+    label.place(x = 15, y = 50)
 
-    text_frame_archivo = tk.Text(root, height=1, width=35,font=("Roboto", 15))
-    text_frame_archivo.place(x=350,y=65)
 
-    label_grafica = tk.Label(root, text="Introduce el nombre del archivo:",bg='#40CFFF',font=("Roboto", 15))
-    label_grafica.place(x=0,y=65)
+    '''
+    LABELS DE IMAGENES
+    '''
 
-    def open_file():  #si se desea cambiar la imagen de fondo de interfaz 
-        file_path = filedialog.askopenfilename(initialdir = "/", title = "Select file", filetypes = (("PNG files", "*.png"), ("JPEG files", "*.jpg"), ("All Files", "*.*")))
-        try:
-            global image
-            image = Image.open(file_path)
-            image = image.resize((400,400))
-            render = ImageTk.PhotoImage(image)
-            img = tk.Label(root, image=render)
-            img.image = render
-            # img.place(x=100,y=150)
-            canvas.create_image(pos_x,pos_y,image=render)
-        except:
-            messagebox.showerror("Error", "Failed to open the image.")
+    #Poner label de plano de imagen 1
+    label_planoxy = tk.Label(ventana, text="Plano XY", font=("Courier",15), bg = "#ff8000")
+    label_planoxy.place(x = 170, y = 120)
 
-    open_file_button = tk.Button(root, text="Seleccionar Imagen", command=open_file, height=2, width=17, font=("Roboto", 11))
-    open_file_button.place(x=10,y=520)
+    #Label para marcar eje x
+    label_x = tk.Label(ventana, text="X", font=("Courier",15), bg = "#ff8000")
+    label_x.place(x = 210, y = 440)
 
-    def save_screenshot(): #si se desea guardar un pantallazo de la interfaz en su estado actual
-        x = root.winfo_rootx()
-        y = root.winfo_rooty()
-        width = root.winfo_width()
-        height = root.winfo_height()
-        
-        # # para ubuntu:
-        # # Crea una imagen a partir de la ventana actual
-        ####### hacer estos pasos en consola para que funcione:
-        # # 1. $ sudo nano /etc/gdm3/custom.conf
-        # # 2. $ WaylandEnable=false
-        # # 3. guardar los cambios
-        # # 4. $ sudo systemctl restart gdm3
-        image = pyautogui.screenshot(region=(x+224, y+100, width-450, height-200))
-        
-        
-        # # para Windows:
-        # Crea una imagen a partir de la ventana actual
-        # dx = (width-750)/2
-        # image = ImageGrab.grab((x+dx+200, y+100, x+dx+600, y + 500))
+    #Label para marcar eje y en plano 1
+    label_y1 = tk.Label(ventana, text="Y", font=("Courier",15), bg = "#ff8000")
+    label_y1.place(x = 60, y = 300)
 
-        # Guarda la imagen en un archivo
-        texto = str(text_frame_grafica.get("1.0",'end-1c'))
-        file_path = filedialog.asksaveasfilename(defaultextension=".png", initialfile= texto + ".png", filetypes=(("PNG files", "*.png"), ("JPEG files", "*.jpg"), ("All Files", "*.*")))
-        image.save(file_path)
+
+    #Poner label de plano de imagen 2
+    label_planoyz = tk.Label(ventana, text="Plano YZ", font=("Courier",15), bg = "#ff8000")
+    label_planoyz.place(x = 670, y = 120)
+
+    #Label para marcar eje y en plano 2
+    label_y2 = tk.Label(ventana, text="Y", font=("Courier",15), bg = "#ff8000")
+    label_y2.place(x = 720, y = 440)
+
+    #Label para marcar eje z
+    label_y1 = tk.Label(ventana, text="Z", font=("Courier",15), bg = "#ff8000")
+    label_y1.place(x = 560, y = 300)
+
+
+    """
+    CREACIÓN DE LOS CANVAS
+    """
+    #Posicionar imagen 1 - posicion x = 80, y = 150
+    imagen = PhotoImage(file="grid.png").subsample(1)
+
+    ancho = imagen.width()
+    alto = imagen.height()
+
+    #Canvas1
+    canvas1 = Canvas(ventana, width = ancho, height = alto)
+
+    ancho_canvas = canvas1.winfo_width()
+    alto_canvas = canvas1.winfo_height()
+    canvas1.place(x = 80, y = 150)
+
+    x = (ancho_canvas) // 2
+    y = (alto_canvas) // 2
+
+    imagen_canvas1 = canvas1.create_image(x, y, anchor=tk.NW, image=imagen)
+
+
+    #Canvas2
+    canvas2 = Canvas(ventana, width = ancho, height = alto)
+    canvas2.place(x = 580, y = 150)
+    imagen_canvas2 = canvas2.create_image(x, y, anchor=tk.NW, image=imagen)
+
+    """
+    FUNCIÓN PARA DIBUJAR DENTRO DE CADA CANVAS - (MANUALMENTE)
     
-    def read_txt():
-        # solicitar servicio con el nombre del archivo
-        global quiero_txt
-        global nombre_txt
-        try:
-            file_path = filedialog.askopenfilename()
-            nombre = os.path.basename(file_path)
-            nombre_txt = file_path #string con el path para acceder al archivo deseado
-            print(nombre_txt)
-            quiero_txt = True 
-            print("en funcion read_txt pasa a ser True")     
-        except:
-            quiero_txt = False
-    
-    def save_to_txt():#en caso de solicitar un txt con las teclas presionadas
-        global guardar_movimientos
-        global filename
-        global folder_path
-        print("nombre archivo")
-        filename = text_frame_archivo.get('1.0',tk.END).strip()
-        folder_path = filedialog.askdirectory()
-        guardar_movimientos = True
-        print(keys_pressed)
-        with open(folder_path + '/' + filename + ".txt", "w") as file:
-            for key in keys_pressed: #keys pressed se ha guardado desde que inicio a correr la interfaz
-                file.write(key + '\n')
-        pass
+    pos_x1 = ancho//2
+    pos_y1 = alto//2
+    pos_y2 = ancho//2
+    pos_z2 = alto//2
 
-        # Crear botones
-    save_screenshot_button = tk.Button(root, text="Tomar pantalla", command=save_screenshot, height=2, width=17, font=("Roboto", 11))
-    save_screenshot_button.place(x=10,y=450)
 
-    save_text_button = tk.Button(root, text="Guardar movimientos", command = save_to_txt, height=2, width=19, font=("Roboto", 11))
-    save_text_button.place(x=630, y=520)
+    def move_and_draw(event):
+        global pos_x1, pos_y1, pos_y2, pos_z2
+        if event.keysym == "a":
+            nueva_pos_x1 = pos_x1 - 10
+            canvas1.create_line(pos_x1, pos_y1, nueva_pos_x1, pos_y1, fill="green",width=5)
+            pos_x1 = nueva_pos_x1
+        elif event.keysym == "d":
+            nueva_pos_x1 = pos_x1 + 10
+            canvas1.create_line(pos_x1, pos_y1, nueva_pos_x1, pos_y1, fill="green",width=5)
+            pos_x1 = nueva_pos_x1
+        elif event.keysym == "w":
+            nueva_pos_y1 = pos_y1 - 10
+            nueva_pos_y2 = pos_y2 - 10
+            canvas1.create_line(pos_x1, pos_y1, pos_x1, nueva_pos_y1, fill="green",width=5)
+            canvas2.create_line(pos_y2, pos_z2, nueva_pos_y2, pos_z2, fill="green",width=5)
+            pos_y1 = nueva_pos_y1
+            pos_y2 = nueva_pos_y2
+        elif event.keysym == "s":
+            nueva_pos_y1 = pos_y1 + 10
+            nueva_pos_y2 = pos_y2 + 10
+            canvas1.create_line(pos_x1, pos_y1, pos_x1, nueva_pos_y1, fill="green",width=5)
+            canvas2.create_line(pos_y2, pos_z2, nueva_pos_y2, pos_z2, fill="green",width=5)
+            pos_y1 = nueva_pos_y1
+            pos_y2 = nueva_pos_y2
+        elif event.keysym == "k":
+            nueva_pos_z2 = pos_z2 + 10
+            canvas2.create_line(pos_y2, pos_z2, pos_y2, nueva_pos_z2, fill="green",width=5)
+            pos_z2 = nueva_pos_z2
+        elif event.keysym == "l":
+            nueva_pos_z2 = pos_z2 - 10
+            canvas2.create_line(pos_y2, pos_z2, pos_y2, nueva_pos_z2, fill="green",width=5)
+            pos_z2 = nueva_pos_z2
 
-    read_movements_button = tk.Button(root, text="Reproducir movimientos", command = read_txt, height=2, width=19, font=("Roboto", 11))
-    read_movements_button.place(x= 630, y = 450)
 
-           
+
+
+    ventana.bind("<KeyPress>", move_and_draw)
+"""
+
+    """
+    PARA TOMAR UN PANTALLAZO
+    """
+
+    def guardar_pantallazo_xy():
+        # Obtener el nombre de archivo ingresado por el usuario
+        nombre_archivo = text_frame.get("1.0", tk.END).strip() + "_xy"
+
+        # Mostrar el cuadro de diálogo para seleccionar la ubicación de guardado
+        ruta_guardado = filedialog.asksaveasfilename(defaultextension=".png", initialfile=nombre_archivo)
+
+        # Verificar si se seleccionó una ubicación de guardado
+        if ruta_guardado:
+            # Obtener las coordenadas y dimensiones del lienzo
+            x = canvas1.winfo_rootx() - ventana.winfo_rootx()
+            y = canvas1.winfo_rooty() - ventana.winfo_rooty()
+            width = canvas1.winfo_width()
+            height = canvas1.winfo_height()
+
+            # Capturar la imagen del lienzo utilizando pyautogui
+            imagen = pyautogui.screenshot(region=(x+75, y+65, width, height))
+
+            # Guardar la imagen en el archivo seleccionado
+            imagen.save(ruta_guardado)
+            print("Pantallazo guardado como", ruta_guardado)
+
+
+    def guardar_pantallazo_yz():
+        # Obtener el nombre de archivo ingresado por el usuario
+        nombre_archivo = text_frame.get("1.0", tk.END).strip() + "_yz"
+
+        # Mostrar el cuadro de diálogo para seleccionar la ubicación de guardado
+        ruta_guardado = filedialog.asksaveasfilename(defaultextension=".png", initialfile=nombre_archivo)
+
+        # Verificar si se seleccionó una ubicación de guardado
+        if ruta_guardado:
+            # Obtener las coordenadas y dimensiones del lienzo
+            x = canvas2.winfo_rootx() - ventana.winfo_rootx()
+            y = canvas2.winfo_rooty() - ventana.winfo_rooty()
+            width = canvas2.winfo_width()
+            height = canvas2.winfo_height()
+            # Capturar la imagen del lienzo utilizando pyautogui
+            imagen = pyautogui.screenshot(region=(x+75, y+65, width, height))
+
+            # Guardar la imagen en el archivo seleccionado
+            imagen.save(ruta_guardado)
+            print("Pantallazo guardado como", ruta_guardado)
+
+    def guardar_pantallazo():
+        guardar_pantallazo_xy()
+        guardar_pantallazo_yz()
+
+
+
+    boton = tk.Button(ventana, command = guardar_pantallazo, text = 'Guardar pantallazo', width = 17, height = 3, font=("Courier",15))
+    boton.place(x = 40, y = 500)
+
+
+
+    #Para coordinar movimientos
     while True:
-        global posiciones
-        xd = -posiciones[0]+400
-        yd = posiciones[1]+400
-        if xd <= 200:
-            xd = xd + 400
-        if xd >= 600:
-            xd = xd - 400
-        if yd <= 100:
-            yd = yd + 400
-        if yd >= 500:
-            yd = yd - 400
-        #print(xd, ' ', yd)
+        print("Dibujando")
+        print(posiciones)
+        xd = (posiciones[0]+2.27)*88.3+200
+        yd = ((posiciones[1]+2.27)*88.3-402.5)*(-1)+95
+        zd = (posiciones[2] + 2.27) * 100 + 200
+
         sleep(0.2)
-        canvas.create_rectangle(xd, yd, xd+2, yd+2, fill='green', outline='green')
+        canvas1.create_line(xd,yd,xd+2,yd+2,fill='green',width=5)
+        canvas2.create_line(yd,zd,yd+2,zd+2,fill='blue',width=5)
 
-        canvas.create_rectangle(200, 100, 200+5, 100+5, fill='green', outline='blue')
-        canvas.create_rectangle(600, 500, 600+5, 500+5, fill='green', outline='blue')
-        root.update_idletasks() #estos 2 comandos reemplazan el root.mainloop()
-        root.update()
-        
+        ventana.update_idletasks()
+        ventana.update()
 
-class Robot_interface(Node):
-    
+    """EJECUCIÓN DE LA INTERFAZ"""
+    # Ejecutar el bucle principal de la aplicación
+    #ventana.mainloop()
+
+
+class RobotManipulatorInterface(Node):
     def __init__(self):
-        global quiero_txt
-        super().__init__('robot_interface')
-        self.subscription = self.create_subscription(String, 'Teclas',self.listener_callback_teclas,10) #nodo se suscribe a robot_teclas
+        super().__init__("robot_manipulator_interface")
+        self.subscription = self.create_subscription(Twist, 'robot_manipulator_position',self.listener_callback_posicion,10)
         self.subscription
-        self.subscription = self.create_subscription(Twist, 'posiciones',self.listener_callback_pos,10) 
-        self.subscription 
-        self.timer = self.create_timer(1.0,self.listener_callback_servicio)
-        self.cli = self.create_client(Reproducir, 'reproducir')
-        print("Cliente creado")
-        while not self.cli.wait_for_service(timeout_sec=2.0):
-                self.get_logger().info('Service not available, waiting again...')
-        
-        
-    def send_request(self, nombre_txt):
-        global quiero_txt
-        if quiero_txt == True:  #Booleano que activa el servicio
-            self.request = Reproducir.Request() #solicitar servicio
-            self.request.nombre = nombre_txt #mandar la ubicacion del archivo como string<aawwssdddwwwwsswwaawwwwssdddaa
-            self.future = self.cli.call_async(self.request)
-            self.future.add_done_callback(self.handle_response)
-            quiero_txt = False
-    
-    def handle_response(self, future):
-        try:
-            response = future.result()
-            self.get_logger().info("Servicio finalizado")
-        except Exception as e:
-            self.get_logger().error("No fue posible llamar el servicio por: %s" % str(e))
-            
+        self.subscription = self.create_subscription(String, 'robot_manipulator_teclas',self.listener_callback_teclas,10)
+        self.subscription
+        print("cliente creado")
 
-    def listener_callback_teclas(self, msg): # lee las teclas que se presionan en el nodo robot_teleop
-        print("Tecla")
-        tecla_presionada = msg.data
-        keys_pressed.append(tecla_presionada) #almacena las teclas en una lista para despues guardarlas en un txt de ser necesario
-
-    def listener_callback_pos(self, msg): # lee las teclas que se presionan en el nodo robot_teleop
-        global posiciones
+    def listener_callback_posicion(self,msg):
         posiciones[0] = msg.linear.x
         posiciones[1] = msg.linear.y
         posiciones[2] = msg.linear.z
-        print(posiciones)
 
-    def listener_callback_servicio(self):
-        global quiero_txt
-        global nombre_txt
-        if quiero_txt == True:
-            print("voy a mandar request posicion")
-            self.send_request(nombre_txt) #solicitar servicio 
-            quiero_txt = False
+    def listener_callback_teclas(self,msg):
+        tecla_presionada = msg.data
+        keys_pressed.append(tecla_presionada)
 
-        
-        
+
 
 def main(args=None):
-    
+
     rclpy.init(args=args)
-    t = Thread(target=creo_interfaz) #inicia un segundo hilo en el cual va a correr la interfaz
-    t.start() #inicia la interfaz
-    robot_interface = Robot_interface()#inicia el nodo
-    rclpy.spin(robot_interface)
+    t = Thread(target=create_interface)
+    t.start()
+    robot_manipulator_interface = RobotManipulatorInterface()
+    rclpy.spin(robot_manipulator_interface)
     t.join()
-    robot_interface.destroy_node()
+    robot_manipulator_interface.destroy_node()
     rclpy.shutdown()
 
-if __name__ == '__main__':
+
+if __name__ == 'main':
     main()
+
+
