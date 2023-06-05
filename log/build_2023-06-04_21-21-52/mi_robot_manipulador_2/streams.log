@@ -1,0 +1,32 @@
+[0.669s] Invoking command in '/home/yaisa/Taller3/src/mi_robot_manipulador_2': PYTHONPATH=/home/yaisa/Taller3/build/mi_robot_manipulador_2/prefix_override:/home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/mi_robot_manipulador_2 build --build-base /home/yaisa/Taller3/build/mi_robot_manipulador_2/build install --record /home/yaisa/Taller3/build/mi_robot_manipulador_2/install.log --single-version-externally-managed
+[0.911s] running egg_info
+[0.911s] writing ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/PKG-INFO
+[0.912s] writing dependency_links to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/dependency_links.txt
+[0.912s] writing entry points to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/entry_points.txt
+[0.912s] writing requirements to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/requires.txt
+[0.912s] writing top-level names to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/top_level.txt
+[0.915s] reading manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'
+[0.917s] writing manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'
+[0.917s] running build
+[0.917s] running build_py
+[0.917s] copying mi_robot_manipulador_2/robot_manipulator_teleop.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2
+[0.918s] copying mi_robot_manipulador_2/robot_manipulator_interface.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2
+[0.918s] running install
+[0.918s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.918s]   warnings.warn(
+[0.919s] running install_lib
+[0.920s] copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/robot_manipulator_teleop.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2
+[0.920s] copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/robot_manipulator_interface.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2
+[0.921s] byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/robot_manipulator_teleop.py to robot_manipulator_teleop.cpython-310.pyc
+[0.923s] byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/robot_manipulator_interface.py to robot_manipulator_interface.cpython-310.pyc
+[0.925s] running install_data
+[0.926s] running install_egg_info
+[0.928s] removing '/home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2-0.0.0-py3.10.egg-info' (and everything under it)
+[0.929s] Copying ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2-0.0.0-py3.10.egg-info
+[0.930s] running install_scripts
+[0.954s] Installing manipulator_sendto_arduino script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[0.954s] Installing robot_manipulator_interface script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[0.954s] Installing robot_manipulator_planner script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[0.954s] Installing robot_manipulator_teleop script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2
+[0.955s] writing list of installed files to '/home/yaisa/Taller3/build/mi_robot_manipulador_2/install.log'
+[0.981s] Invoked command in '/home/yaisa/Taller3/src/mi_robot_manipulador_2' returned '0': PYTHONPATH=/home/yaisa/Taller3/build/mi_robot_manipulador_2/prefix_override:/home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/mi_robot_manipulador_2 build --build-base /home/yaisa/Taller3/build/mi_robot_manipulador_2/build install --record /home/yaisa/Taller3/build/mi_robot_manipulador_2/install.log --single-version-externally-managed

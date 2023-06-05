@@ -1,4 +1,0 @@
-[console_scripts]
-robot_manipulator_teleop = mi_robot_manipulador_2.robot_manipulator_teleop:main
-robot_manipulator_teleop_test = mi_robot_manipulador_2.robot_manipulator_teleop_test:main
-

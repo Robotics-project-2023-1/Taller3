@@ -1,0 +1,80 @@
+[0.000000] (-) TimerEvent: {}
+[0.000313] (mi_robot_manipulador_2) JobQueued: {'identifier': 'mi_robot_manipulador_2', 'dependencies': OrderedDict()}
+[0.002448] (mi_robot_manipulador_2) JobStarted: {'identifier': 'mi_robot_manipulador_2'}
+[0.099346] (-) TimerEvent: {}
+[0.199961] (-) TimerEvent: {}
+[0.300624] (-) TimerEvent: {}
+[0.401127] (-) TimerEvent: {}
+[0.501719] (-) TimerEvent: {}
+[0.602325] (-) TimerEvent: {}
+[0.702987] (-) TimerEvent: {}
+[0.803575] (-) TimerEvent: {}
+[0.904164] (-) TimerEvent: {}
+[1.004768] (-) TimerEvent: {}
+[1.105350] (-) TimerEvent: {}
+[1.205954] (-) TimerEvent: {}
+[1.306458] (-) TimerEvent: {}
+[1.406980] (-) TimerEvent: {}
+[1.507568] (-) TimerEvent: {}
+[1.521952] (mi_robot_manipulador_2) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../build/mi_robot_manipulador_2', 'build', '--build-base', '/home/yaisa/Taller3/build/mi_robot_manipulador_2/build', 'install', '--record', '/home/yaisa/Taller3/build/mi_robot_manipulador_2/install.log', '--single-version-externally-managed'], 'cwd': '/home/yaisa/Taller3/src/mi_robot_manipulador_2', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'yaisa', 'LC_TIME': 'es_CO.UTF-8', 'XDG_SESSION_TYPE': 'x11', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/yaisa', 'OLDPWD': '/home/yaisa', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'es_CO.UTF-8', 'SYSTEMD_EXEC_PID': '1450', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'ROS_DISTRO': 'humble', 'LOGNAME': 'yaisa', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'yaisa', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'WINDOWPATH': '2', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/UbuntuY:@/tmp/.ICE-unix/1429,unix/UbuntuY:/tmp/.ICE-unix/1429', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'es_CO.UTF-8', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/f10bde73_7da3_4dc1_9d21_93ecca6d11c1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'es_CO.UTF-8', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.103', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'es_CO.UTF-8', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'es_CO.UTF-8', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'LC_IDENTIFICATION': 'es_CO.UTF-8', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/yaisa/Taller3/build/mi_robot_manipulador_2', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/yaisa/Taller3/build/mi_robot_manipulador_2/prefix_override:/home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'es_CO.UTF-8', 'LC_PAPER': 'es_CO.UTF-8', 'COLCON': '1', 'VTE_VERSION': '6800'}, 'shell': False}
+[1.607833] (-) TimerEvent: {}
+[1.708490] (-) TimerEvent: {}
+[1.809104] (-) TimerEvent: {}
+[1.909656] (-) TimerEvent: {}
+[1.985753] (mi_robot_manipulador_2) StdoutLine: {'line': b'running egg_info\n'}
+[1.987213] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info\n'}
+[1.987647] (mi_robot_manipulador_2) StdoutLine: {'line': b'writing ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/PKG-INFO\n'}
+[1.987898] (mi_robot_manipulador_2) StdoutLine: {'line': b'writing dependency_links to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/dependency_links.txt\n'}
+[1.988403] (mi_robot_manipulador_2) StdoutLine: {'line': b'writing entry points to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/entry_points.txt\n'}
+[1.988847] (mi_robot_manipulador_2) StdoutLine: {'line': b'writing requirements to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/requires.txt\n'}
+[1.989054] (mi_robot_manipulador_2) StdoutLine: {'line': b'writing top-level names to ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/top_level.txt\n'}
+[1.989411] (mi_robot_manipulador_2) StdoutLine: {'line': b"writing manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'\n"}
+[1.992690] (mi_robot_manipulador_2) StdoutLine: {'line': b"reading manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'\n"}
+[1.994318] (mi_robot_manipulador_2) StdoutLine: {'line': b"writing manifest file '../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info/SOURCES.txt'\n"}
+[1.994690] (mi_robot_manipulador_2) StdoutLine: {'line': b'running build\n'}
+[1.995061] (mi_robot_manipulador_2) StdoutLine: {'line': b'running build_py\n'}
+[1.995259] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating /home/yaisa/Taller3/build/mi_robot_manipulador_2/build\n'}
+[1.995503] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib\n'}
+[1.995697] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2\n'}
+[1.995885] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying mi_robot_manipulador_2/robot_manipulator_teleop_test.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2\n'}
+[1.996233] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying mi_robot_manipulador_2/manipulator_sendto_arduino.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2\n'}
+[1.996435] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying mi_robot_manipulador_2/robot_manipulator_teleop.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2\n'}
+[1.996614] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying mi_robot_manipulador_2/__init__.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2\n'}
+[1.996846] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying mi_robot_manipulador_2/cinematica_brazo.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2\n'}
+[1.997011] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying mi_robot_manipulador_2/robot_manipulator_interface.py -> /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2\n'}
+[1.997476] (mi_robot_manipulador_2) StdoutLine: {'line': b'running install\n'}
+[1.998319] (mi_robot_manipulador_2) StderrLine: {'line': b'/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[1.998702] (mi_robot_manipulador_2) StderrLine: {'line': b'  warnings.warn(\n'}
+[1.999158] (mi_robot_manipulador_2) StdoutLine: {'line': b'running install_lib\n'}
+[2.000979] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2\n'}
+[2.001373] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/robot_manipulator_teleop_test.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2\n'}
+[2.001810] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/manipulator_sendto_arduino.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2\n'}
+[2.002189] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/robot_manipulator_teleop.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2\n'}
+[2.002381] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/__init__.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2\n'}
+[2.002553] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/cinematica_brazo.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2\n'}
+[2.002741] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying /home/yaisa/Taller3/build/mi_robot_manipulador_2/build/lib/mi_robot_manipulador_2/robot_manipulator_interface.py -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2\n'}
+[2.003146] (mi_robot_manipulador_2) StdoutLine: {'line': b'byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/robot_manipulator_teleop_test.py to robot_manipulator_teleop_test.cpython-310.pyc\n'}
+[2.004375] (mi_robot_manipulador_2) StdoutLine: {'line': b'byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/manipulator_sendto_arduino.py to manipulator_sendto_arduino.cpython-310.pyc\n'}
+[2.005909] (mi_robot_manipulador_2) StdoutLine: {'line': b'byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/robot_manipulator_teleop.py to robot_manipulator_teleop.cpython-310.pyc\n'}
+[2.009864] (-) TimerEvent: {}
+[2.010339] (mi_robot_manipulador_2) StdoutLine: {'line': b'byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/__init__.py to __init__.cpython-310.pyc\n'}
+[2.010906] (mi_robot_manipulador_2) StdoutLine: {'line': b'byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/cinematica_brazo.py to cinematica_brazo.cpython-310.pyc\n'}
+[2.013444] (mi_robot_manipulador_2) StdoutLine: {'line': b'byte-compiling /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2/robot_manipulator_interface.py to robot_manipulator_interface.cpython-310.pyc\n'}
+[2.016233] (mi_robot_manipulador_2) StdoutLine: {'line': b'running install_data\n'}
+[2.017235] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating /home/yaisa/Taller3/install/mi_robot_manipulador_2/share/ament_index\n'}
+[2.017903] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating /home/yaisa/Taller3/install/mi_robot_manipulador_2/share/ament_index/resource_index\n'}
+[2.018110] (mi_robot_manipulador_2) StdoutLine: {'line': b'creating /home/yaisa/Taller3/install/mi_robot_manipulador_2/share/ament_index/resource_index/packages\n'}
+[2.018278] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying resource/mi_robot_manipulador_2 -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/share/ament_index/resource_index/packages\n'}
+[2.018435] (mi_robot_manipulador_2) StdoutLine: {'line': b'copying package.xml -> /home/yaisa/Taller3/install/mi_robot_manipulador_2/share/mi_robot_manipulador_2\n'}
+[2.018569] (mi_robot_manipulador_2) StdoutLine: {'line': b'running install_egg_info\n'}
+[2.021455] (mi_robot_manipulador_2) StdoutLine: {'line': b'Copying ../../build/mi_robot_manipulador_2/mi_robot_manipulador_2.egg-info to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/python3.10/site-packages/mi_robot_manipulador_2-0.0.0-py3.10.egg-info\n'}
+[2.023091] (mi_robot_manipulador_2) StdoutLine: {'line': b'running install_scripts\n'}
+[2.065753] (mi_robot_manipulador_2) StdoutLine: {'line': b'Installing manipulator_sendto_arduino script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2\n'}
+[2.066343] (mi_robot_manipulador_2) StdoutLine: {'line': b'Installing robot_manipulator_interface script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2\n'}
+[2.066537] (mi_robot_manipulador_2) StdoutLine: {'line': b'Installing robot_manipulator_teleop script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2\n'}
+[2.066704] (mi_robot_manipulador_2) StdoutLine: {'line': b'Installing robot_manipulator_teleop_test script to /home/yaisa/Taller3/install/mi_robot_manipulador_2/lib/mi_robot_manipulador_2\n'}
+[2.067188] (mi_robot_manipulador_2) StdoutLine: {'line': b"writing list of installed files to '/home/yaisa/Taller3/build/mi_robot_manipulador_2/install.log'\n"}
+[2.103961] (mi_robot_manipulador_2) CommandEnded: {'returncode': 0}
+[2.110003] (-) TimerEvent: {}
+[2.145422] (mi_robot_manipulador_2) JobEnded: {'identifier': 'mi_robot_manipulador_2', 'rc': 0}
+[2.147034] (-) EventReactorShutdown: {}
