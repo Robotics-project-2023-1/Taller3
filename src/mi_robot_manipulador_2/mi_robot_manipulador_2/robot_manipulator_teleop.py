@@ -33,6 +33,57 @@ class RobotManipulatorTeleop(Node):
 
     def directa(self, grados_movidos):  #RODRI PON AQUI TUS ECUACIONES
         #grados_movidos es [serv1, serv2, serv3] son los cambios en cada comando
+        theta_base = grados_movidos[2]
+        theta1 = grados_movidos[0]
+        theta2 = grados_movidos[1]
+        link1_length = 9  # Length of link 1
+        link2_length = 9  # Length of link 2
+
+
+        theta_base = np.radians(theta_base)
+        theta1 = np.radians(theta1)
+        theta2 = np.radians(theta2)
+
+        # DH parameters
+        d0 = 0
+        a0 = 0
+        alpha0 = theta_base
+
+        d1 = link1_length
+        a1 = 0
+        alpha1 = 0
+
+        d2 = 0
+        a2 = link2_length
+        alpha2 = 0
+
+        # Homogeneous transformation matrices
+        T0 = np.array([[np.cos(alpha0), -np.sin(alpha0), 0, a0],
+                       [np.sin(alpha0), np.cos(alpha0), 0, 0],
+                       [0, 0, 1, d0],
+                       [0, 0, 0, 1]])
+
+        T1 = np.array([[np.cos(theta1), -np.sin(theta1)*np.cos(alpha1), np.sin(theta1)*np.sin(alpha1), a1*np.cos(theta1)],
+                       [np.sin(theta1), np.cos(theta1)*np.cos(alpha1), -np.cos(theta1)*np.sin(alpha1), a1*np.sin(theta1)],
+                       [0, np.sin(alpha1), np.cos(alpha1), d1],
+                       [0, 0, 0, 1]])
+
+        T2 = np.array([[np.cos(theta2), -np.sin(theta2)*np.cos(alpha2), np.sin(theta2)*np.sin(alpha2), a2*np.cos(theta2)],
+                       [np.sin(theta2), np.cos(theta2)*np.cos(alpha2), -np.cos(theta2)*np.sin(alpha2), a2*np.sin(theta2)],
+                       [0, np.sin(alpha2), np.cos(alpha2), d2],
+                       [0, 0, 0, 1]])
+
+        # Forward kinematics
+        T = np.dot(T0, np.dot(T1, T2))
+
+        # Extract position and orientation
+        position = T[:3, 3]
+        orientation = T[:3, :3]
+        print(position)
+        
+        
+        
+        
         x_final = 1*grados_movidos[0]
         y_final = 1*grados_movidos[1]
         z_final = 1*grados_movidos[2]
@@ -54,7 +105,7 @@ class RobotManipulatorTeleop(Node):
         comand = Int32MultiArray()
         try:      
             
-            if key.char == "u": #Motor1 adelante
+            if key.char == "y": #Motor1 adelante
                 self.directa([pasos,0,0])
                 arreglo[3] = inicial1 + pasos
                 comand.data = arreglo
@@ -62,7 +113,7 @@ class RobotManipulatorTeleop(Node):
                 self.get_logger().info('Joint1 adelanTe')
                 inicial1 = inicial1 + pasos
                 
-            elif key.char == "j": #Motor1 atras
+            elif key.char == "h": #Motor1 atras
                 self.directa([-pasos,0,0])
                 arreglo[3] = inicial1 -pasos
                 comand.data = arreglo
@@ -70,7 +121,7 @@ class RobotManipulatorTeleop(Node):
                 self.get_logger().info('Joint1 atras')
                 inicial1 = inicial1 - pasos
 
-            elif key.char == "i": #Motor2 adelante
+            elif key.char == "u": #Motor2 adelante
                 self.directa([0,pasos,0])
                 arreglo[4] = inicial2 + pasos
                 comand.data = arreglo
@@ -79,7 +130,7 @@ class RobotManipulatorTeleop(Node):
                 inicial2 = inicial2 + pasos
 
 
-            elif key.char == "k": #Motor2 adelante
+            elif key.char == "j": #Motor2 adelante
                 self.directa([0,-pasos, 0])
                 arreglo[4] = inicial2-pasos
                 comand.data = arreglo
@@ -88,7 +139,7 @@ class RobotManipulatorTeleop(Node):
                 inicial2 = inicial2 - pasos
 
 
-            elif key.char == "o": #Motor3 atras
+            elif key.char == "i": #Motor3 atras
                 self.directa([0,0,pasos])
                 arreglo[5] = inicial3 + pasos
                 comand.data = arreglo
@@ -96,7 +147,7 @@ class RobotManipulatorTeleop(Node):
                 self.get_logger().info('Joint3 atras')
                 inicial3 = inicial3 + pasos
 
-            elif key.char == "l": #Motor3 adelante
+            elif key.char == "k": #Motor3 adelante
                 self.directa([0,0,-pasos])
                 arreglo[5] = inicial3-pasos
                 comand.data = arreglo
@@ -104,14 +155,14 @@ class RobotManipulatorTeleop(Node):
                 self.get_logger().info('Joint3 adelante')
                 inicial3 = inicial3 - pasos
 
-            elif key.char == "p": #Motor4 gripper abrir
+            elif key.char == "o": #Motor4 gripper abrir
                 arreglo[6] = -165
                 comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint4 abrir gripper')
 
 
-            elif key.char == ";": #Motor4 gripper cerraroom
+            elif key.char == "l": #Motor4 gripper cerraroom
                 arreglo[6] = 165
                 comand.data = arreglo
                 self.publisher_comands_.publish(comand)
@@ -145,5 +196,4 @@ def main(args=None):
     
 if __name__ == '__main__':
     main()
-
 
