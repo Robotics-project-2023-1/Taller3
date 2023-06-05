@@ -39,65 +39,30 @@ class RobotManipulatorTeleop(Node):
         global y_final
         global z_final
         
-        theta_base = grados_movidos[2]
-        theta1 = grados_movidos[0]
-        theta2 = grados_movidos[1]
-        link1_length = 9  # Length of link 1
-        link2_length = 12  # Length of link 2
 
 
-        theta_base = np.radians(theta_base)
+        theta1 = grados_movidos[2]  ## Base
+        theta2 = grados_movidos[0]  ## l1
+        theta3 = grados_movidos[1]
+
+        L1 = 1
+        L2 = 9  # Length of link 1
+        L3 = 12  # Length of link 2
+
+
         theta1 = np.radians(theta1)
         theta2 = np.radians(theta2)
+        theta3 = np.radians(theta3)
 
-        # DH parameters
-        d0 = 0
-        a0 = 0
-        alpha0 = theta_base
+        x_final = x_final + np.cos(theta1)*np.cos(theta2+theta3)*(L3)+np.cos(theta1)*np.cos(theta2)*L2
+        y_final = y_final + np.sin(theta1)*np.cos(theta2+theta3)*L3+np.sin(theta1)*np.cos(theta2)*L2
+        z_final = z_final + np.sin(theta2+theta3)*L3+np.sin(theta2)*L2+L1
 
-        d1 = link1_length
-        a1 = 0
-        alpha1 = 0
-
-        d2 = 0
-        a2 = link2_length
-        alpha2 = 0
-
-        # Homogeneous transformation matrices
-        T0 = np.array([[np.cos(alpha0), -np.sin(alpha0), 0, a0],
-                       [np.sin(alpha0), np.cos(alpha0), 0, 0],
-                       [0, 0, 1, d0],
-                       [0, 0, 0, 1]])
-
-        T1 = np.array([[np.cos(theta1), -np.sin(theta1)*np.cos(alpha1), np.sin(theta1)*np.sin(alpha1), a1*np.cos(theta1)],
-                       [np.sin(theta1), np.cos(theta1)*np.cos(alpha1), -np.cos(theta1)*np.sin(alpha1), a1*np.sin(theta1)],
-                       [0, np.sin(alpha1), np.cos(alpha1), d1],
-                       [0, 0, 0, 1]])
-
-        T2 = np.array([[np.cos(theta2), -np.sin(theta2)*np.cos(alpha2), np.sin(theta2)*np.sin(alpha2), a2*np.cos(theta2)],
-                       [np.sin(theta2), np.cos(theta2)*np.cos(alpha2), -np.cos(theta2)*np.sin(alpha2), a2*np.sin(theta2)],
-                       [0, np.sin(alpha2), np.cos(alpha2), d2],
-                       [0, 0, 0, 1]])
-
-        # Forward kinematics
-        T = np.dot(T0, np.dot(T1, T2))
-
-        # Extract position and orientation
-        position = T[:3, 3]
-        orientation = T[:3, :3]
-                
-        x_final = position[0]
-        y_final = position[1]
-        z_final = position[2]
         
         coordenadas = Point() #INFORMACION EN CM PORQUE NO SE PUEDE USAR FLOAT
         coordenadas.x = float(x_final)
         coordenadas.y = float(y_final)
         coordenadas.z = float(z_final)
-        print(position[0],position[1],position[2])
-        x_final = x_final + position[0]
-        y_final = y_final + position[1]
-        z_final = z_final + position[2]
         self.publisher_position_.publish(coordenadas)
         self.get_logger().info('Coordenadas publicadas')
 
@@ -202,4 +167,3 @@ def main(args=None):
     
 if __name__ == '__main__':
     main()
-
