@@ -79,14 +79,10 @@ class RobotManipulatorTeleop(Node):
         # Extract position and orientation
         position = T[:3, 3]
         orientation = T[:3, :3]
-        print(position)
-        
-        
-        
-        
-        x_final = 1*grados_movidos[0]
-        y_final = 1*grados_movidos[1]
-        z_final = 1*grados_movidos[2]
+                
+        x_final = position[0]
+        y_final = position[1]
+        z_final = position[2]
         
         coordenadas = Point() #INFORMACION EN CM PORQUE NO SE PUEDE USAR FLOAT
         coordenadas.x = float(x_final)
