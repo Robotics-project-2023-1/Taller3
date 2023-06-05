@@ -56,8 +56,8 @@ void loop() {
       motor3.write(pasos3_ant + integer_array[5]);
       motor4.write(integer_array[6]);
       pasos1_ant = pasos1_ant + integer_array[3];
-      pasos2_ant = pasos2_ant + integer_array[3];
-      pasos3_ant = pasos3_ant + integer_array[3];
+      pasos2_ant = pasos2_ant + integer_array[4];
+      pasos3_ant = pasos3_ant + integer_array[5];
     }
   i = 0;
 
