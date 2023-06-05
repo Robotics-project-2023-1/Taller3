@@ -26,10 +26,6 @@ r5=8
 A=[0,0]
 D=[0,0]
 
-x_final = 8
-y_final = 8
-z_final = 8
-
 #Ef=[] : coordenads [x,y] del end-effector
 #Servos=[]:  angulos [theta1, theta3] correspondientes a los servos
 #Xa=np.array([[],[],[],[]]): arreglo np donde [[theta1],[theta2],[theta3],[theta4]] correspnden a la configuración actual 
@@ -72,36 +68,36 @@ class RobotManipulatorPlanner(Node):
         x = coordenadas_goal.x  # Desired end effector x-coordinate
         y = coordenadas_goal.y  # Desired end effector y-coordinate
         z = coordenadas_goal.z  # Desired end effector z-coordinate
-        link1_length = 9  # Length of link 1
-        link2_length = 9  # Length of link 2
 
-            
-        # Calculate the distance from the base to the end effector projection in the XY plane
-        distance_xy = np.sqrt(x**2 + y**2)
-
-        # Calculate the distance from the base to the end effector
-        distance = np.sqrt(distance_xy**2 + z**2)
-
-        # Check if the desired position is reachable
-        if distance > link1_length + link2_length:
-            print("Desired position is out of reach")
+        L1 = 1.0
+        L2 = 9.0  # Length of link 1
+        L3 = 12.0  # Length of link 2
 
 
-        # Calculate the angles using trigonometry
-        theta2 = np.arccos((x**2 + y**2 + z**2 - link1_length**2 - link2_length**2) / (2 * link1_length * link2_length))
-        theta1 = np.arctan2(y, x) - np.arctan2(link2_length * np.sin(theta2), link1_length + link2_length * np.cos(theta2))
+        theta1 = np.arctan2(y,x)
 
-        # Calculate the angle for the rotating base
-        theta_base = np.arctan2(y, x)
+
+        c3 = (x**2+y**2+z**2-(L1**2+L2**2+L3**2)-2*L1*(z-L1))/(2*L2*L3)
+        s3 = np.sqrt(1-c3)
+        theta3 = np.arctan2(s3,c3)
+
+        k1 = c3*L3+L2
+        k2 = s3*L3
+        A = -2*k1*(L1-z)
+        B = (2*k1*(L1-z))**2-4*(k1**2+k2**2)*(z**2+L1**2-k2**2-2*z*L1)
+
+        theta2 = np.arcsin((A+np.sqrt(B))/(2*(k1**2+k2**2)))
 
         # Convert angles to degrees
-        theta_base = np.degrees(theta_base)
         theta1 = np.degrees(theta1)
         theta2 = np.degrees(theta2)
+        theta3 = np.degrees(theta3)
+
+
         
-        ang_serv1 = theta1
-        ang_serv2 = theta2
-        ang_serv3 = theta_base
+        ang_serv1 = theta2
+        ang_serv2 = theta3
+        ang_serv3 = theta1
         #BLA BLA FORMULAS
         print("Movimientos de cada servo fueron planeados. Ejecutando...")
         comando = Int32MultiArray()  #
@@ -120,66 +116,35 @@ class RobotManipulatorPlanner(Node):
 
     def directa(self, grados_movidos):  #RODRI PON AQUI TUS ECUACIONES
         #grados_movidos es [serv1, serv2, serv3] son los cambios en cada comando
-        #BLA BLA PROCESO DIRECTA (EN ESTE CASO SE HACE DIRECTA SOLO PARA QUE SE VEA EN LA INTERFAZ)
-        theta_base = grados_movidos[2]
-        theta1 = grados_movidos[0]
-        theta2 = grados_movidos[1]
-        link1_length = 9  # Length of link 1
-        link2_length = 12  # Length of link 2
+        global x_final
+        global y_final
+        global z_final
+        
 
 
-        theta_base = np.radians(theta_base)
+        theta1 = grados_movidos[2]  ## Base
+        theta2 = grados_movidos[0]  ## l1
+        theta3 = grados_movidos[1]
+
+        L1 = 1
+        L2 = 9  # Length of link 1
+        L3 = 12  # Length of link 2
+
+
         theta1 = np.radians(theta1)
         theta2 = np.radians(theta2)
+        theta3 = np.radians(theta3)
 
-        # DH parameters
-        d0 = 0
-        a0 = 0
-        alpha0 = theta_base
+        x_final = x_final + np.cos(theta1)*np.cos(theta2+theta3)*(L3)+np.cos(theta1)*np.cos(theta2)*L2
+        y_final = y_final + np.sin(theta1)*np.cos(theta2+theta3)*L3+np.sin(theta1)*np.cos(theta2)*L2
+        z_final = z_final + np.sin(theta2+theta3)*L3+np.sin(theta2)*L2+L1
 
-        d1 = link1_length
-        a1 = 0
-        alpha1 = 0
-
-        d2 = 0
-        a2 = link2_length
-        alpha2 = 0
-
-        # Homogeneous transformation matrices
-        T0 = np.array([[np.cos(alpha0), -np.sin(alpha0), 0, a0],
-                       [np.sin(alpha0), np.cos(alpha0), 0, 0],
-                       [0, 0, 1, d0],
-                       [0, 0, 0, 1]])
-
-        T1 = np.array([[np.cos(theta1), -np.sin(theta1)*np.cos(alpha1), np.sin(theta1)*np.sin(alpha1), a1*np.cos(theta1)],
-                       [np.sin(theta1), np.cos(theta1)*np.cos(alpha1), -np.cos(theta1)*np.sin(alpha1), a1*np.sin(theta1)],
-                       [0, np.sin(alpha1), np.cos(alpha1), d1],
-                       [0, 0, 0, 1]])
-
-        T2 = np.array([[np.cos(theta2), -np.sin(theta2)*np.cos(alpha2), np.sin(theta2)*np.sin(alpha2), a2*np.cos(theta2)],
-                       [np.sin(theta2), np.cos(theta2)*np.cos(alpha2), -np.cos(theta2)*np.sin(alpha2), a2*np.sin(theta2)],
-                       [0, np.sin(alpha2), np.cos(alpha2), d2],
-                       [0, 0, 0, 1]])
-
-        # Forward kinematics
-        T = np.dot(T0, np.dot(T1, T2))
-
-        # Extract position and orientation
-        position = T[:3, 3]
-        orientation = T[:3, :3]
-                
-        x_final = position[0]
-        y_final = position[1]
-        z_final = position[2]
+        print(x_final,y_final,z_final)
         
         coordenadas = Point() #
         coordenadas.x = float(x_final)
         coordenadas.y = float(y_final)
         coordenadas.z = float(z_final)
-        print(position[0],position[1],position[2])
-        x_final = x_final + position[0]
-        y_final = y_final + position[1]
-        z_final = z_final + position[2]
         self.publisher_position_.publish(coordenadas)
         self.get_logger().info('Coordenadas publicadas')
 
