@@ -17,6 +17,7 @@ inicial1 = 90
 inicial2 = 90
 inicial3 = 90
 inicial4 = 90
+arreglo = [2,0,0,0,0,0,0] #Selector, lineal, angular, serv1, serv2, serv3, serv4
 
 class RobotManipulatorTeleop(Node):
     def __init__(self):
@@ -45,34 +46,34 @@ class RobotManipulatorTeleop(Node):
 
  
     def on_press(self, key):
-        self.arreglo = [2,0,0,0,0,0,0] #Selector, lineal, angular, serv1, serv2, serv3, serv4
+        global arreglo
         global pasos
         global inicial1
         global inicial2
-        global incial3
+        global inicial3
         comand = Int32MultiArray()
         try:      
             
             if key.char == "u": #Motor1 adelante
                 self.directa([pasos,0,0])
-                self.arreglo[3] = inicial1 + pasos
-                comand.data = self.arreglo
+                arreglo[3] = inicial1 + pasos
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint1 adelanTe')
                 inicial1 = inicial1 + pasos
                 
             elif key.char == "j": #Motor1 atras
                 self.directa([-pasos,0,0])
-                self.arreglo[3] = inicial1 -pasos
-                comand.data = self.arreglo
+                arreglo[3] = inicial1 -pasos
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint1 atras')
                 inicial1 = inicial1 - pasos
 
             elif key.char == "i": #Motor2 adelante
                 self.directa([0,pasos,0])
-                self.arreglo[4] = inicial2 + pasos
-                comand.data = self.arreglo
+                arreglo[4] = inicial2 + pasos
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint2 adelante')
                 inicial2 = inicial2 + pasos
@@ -80,8 +81,8 @@ class RobotManipulatorTeleop(Node):
 
             elif key.char == "k": #Motor2 adelante
                 self.directa([0,-pasos, 0])
-                self.arreglo[4] = inicial2-pasos
-                comand.data = self.arreglo
+                arreglo[4] = inicial2-pasos
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint2 atras')
                 inicial2 = inicial2 - pasos
@@ -89,30 +90,30 @@ class RobotManipulatorTeleop(Node):
 
             elif key.char == "o": #Motor3 atras
                 self.directa([0,0,pasos])
-                self.arreglo[5] = inicial3 + pasos
-                comand.data = self.arreglo
+                arreglo[5] = inicial3 + pasos
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint3 atras')
                 inicial3 = inicial3 + pasos
 
             elif key.char == "l": #Motor3 adelante
                 self.directa([0,0,-pasos])
-                self.arreglo[5] = inicial3-pasos
-                comand.data = self.arreglo
+                arreglo[5] = inicial3-pasos
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint3 adelante')
                 inicial3 = inicial3 - pasos
 
             elif key.char == "p": #Motor4 gripper abrir
-                self.arreglo[6] = -165
-                comand.data = self.arreglo
+                arreglo[6] = -165
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint4 abrir gripper')
 
 
             elif key.char == ";": #Motor4 gripper cerraroom
-                self.arreglo[6] = 165
-                comand.data = self.arreglo
+                arreglo[6] = 165
+                comand.data = arreglo
                 self.publisher_comands_.publish(comand)
                 self.get_logger().info('Joint4 cerrar gripper')
                 
