@@ -26,6 +26,10 @@ r5=8
 A=[0,0]
 D=[0,0]
 
+x_final = 8
+y_final = 8
+z_final = 8
+
 #Ef=[] : coordenads [x,y] del end-effector
 #Servos=[]:  angulos [theta1, theta3] correspondientes a los servos
 #Xa=np.array([[],[],[],[]]): arreglo np donde [[theta1],[theta2],[theta3],[theta4]] correspnden a la configuración actual 
@@ -103,7 +107,7 @@ class RobotManipulatorPlanner(Node):
         comando = Int32MultiArray()  #
         self.arreglo = [2,0,0,int(ang_serv1),int(ang_serv2),int(ang_serv3),-165] #Selector, lineal, angular, serv1, serv2, serv3, serv4
         print("Se mandara el comando " + str(self.arreglo))
-        comando.data = list(self.arreglo)
+        comando.data = self.arreglo
         self.publisher_comands_.publish(comando)
         self.get_logger().info('Comando enviado a nodo sendto_arduino')
         ## Implementar alguna variable de control para cerrar el gripper
@@ -172,6 +176,10 @@ class RobotManipulatorPlanner(Node):
         coordenadas.x = float(x_final)
         coordenadas.y = float(y_final)
         coordenadas.z = float(z_final)
+        print(position[0],position[1],position[2])
+        x_final = x_final + position[0]
+        y_final = y_final + position[1]
+        z_final = z_final + position[2]
         self.publisher_position_.publish(coordenadas)
         self.get_logger().info('Coordenadas publicadas')
 

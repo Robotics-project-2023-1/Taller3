@@ -10,7 +10,9 @@ from math import sin
 from math import pi
 from time import time
 
-
+x_final = 8
+y_final = 8
+z_final = 8
 pasos = int(input("Cuantos pasos quiere que den todos los motores inicialmente: "))
 pasos_fijos = True
 inicial1 = 90
@@ -33,6 +35,10 @@ class RobotManipulatorTeleop(Node):
 
     def directa(self, grados_movidos):  #RODRI PON AQUI TUS ECUACIONES
         #grados_movidos es [serv1, serv2, serv3] son los cambios en cada comando
+        global x_final
+        global y_final
+        global z_final
+        
         theta_base = grados_movidos[2]
         theta1 = grados_movidos[0]
         theta2 = grados_movidos[1]
@@ -88,6 +94,10 @@ class RobotManipulatorTeleop(Node):
         coordenadas.x = float(x_final)
         coordenadas.y = float(y_final)
         coordenadas.z = float(z_final)
+        print(position[0],position[1],position[2])
+        x_final = x_final + position[0]
+        y_final = y_final + position[1]
+        z_final = z_final + position[2]
         self.publisher_position_.publish(coordenadas)
         self.get_logger().info('Coordenadas publicadas')
 

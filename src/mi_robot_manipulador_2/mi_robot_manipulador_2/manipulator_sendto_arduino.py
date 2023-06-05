@@ -24,15 +24,15 @@ class ManipulatorSendtoArduino(Node):
         
         if(lista_n != lista_a):
             ser.write(f"{comando.data[0]},{comando.data[1]},{comando.data[2]},{comando.data[3]},{comando.data[4]}, {comando.data[5]}, {comando.data[6]} \n".encode())
-            ser.write(f"{1},{0},{0},{0},{0},{0},{0},{0}\n".encode()) #Para detener
+            #ser.write(f"{1},{0},{0},{0},{0},{0},{0},{0}\n".encode()) #Para detener
             time.sleep(0.1)
         lista_a = lista_n
 
-        if ser.inWaiting() > 0:
-            entrada = ser.readline().decode('utf-8').rstrip()
-            info_arduino = entrada.split(',')
-            print(info_arduino)
-            ser.flush()
+        #if ser.inWaiting() > 0:
+            #entrada = ser.readline().decode('utf-8').rstrip()
+            #info_arduino = entrada.split(',')
+            #print(info_arduino)
+            #ser.flush()
           
 
 def main(args=None):

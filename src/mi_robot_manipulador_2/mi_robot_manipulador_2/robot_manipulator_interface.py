@@ -165,9 +165,9 @@ class RobotManipulatorInterface(Node):
         
     def listener_callback_posicion(self,msg):
         global posiciones
-        posiciones[0] = msg.x
-        posiciones[1] = msg.y
-        posiciones[2] = msg.z
+        posiciones[0] = posiciones[0] + msg.x
+        posiciones[1] = posiciones[1] + msg.y
+        posiciones[2] = posiciones[2] + msg.z
 
 
 
