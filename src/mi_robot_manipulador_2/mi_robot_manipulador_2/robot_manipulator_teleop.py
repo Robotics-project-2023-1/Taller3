@@ -37,7 +37,7 @@ class RobotManipulatorTeleop(Node):
         theta1 = grados_movidos[0]
         theta2 = grados_movidos[1]
         link1_length = 9  # Length of link 1
-        link2_length = 9  # Length of link 2
+        link2_length = 12  # Length of link 2
 
 
         theta_base = np.radians(theta_base)

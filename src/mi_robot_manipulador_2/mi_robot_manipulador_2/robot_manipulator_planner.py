@@ -63,9 +63,41 @@ class RobotManipulatorPlanner(Node):
         
     def inversa(self, coordenadas_goal): #RODRI PON AQUI TUS ECUACIONES
         #BLA BLA PROCESO INVERSA
-        ang_serv1 = coordenadas_goal.x
-        ang_serv2 = coordenadas_goal.y
-        ang_serv3 = coordenadas_goal.z
+        
+        # Example usage
+        x = coordenadas_goal.x  # Desired end effector x-coordinate
+        y = coordenadas_goal.y  # Desired end effector y-coordinate
+        z = coordenadas_goal.z  # Desired end effector z-coordinate
+        link1_length = 9  # Length of link 1
+        link2_length = 9  # Length of link 2
+
+            
+        # Calculate the distance from the base to the end effector projection in the XY plane
+        distance_xy = np.sqrt(x**2 + y**2)
+
+        # Calculate the distance from the base to the end effector
+        distance = np.sqrt(distance_xy**2 + z**2)
+
+        # Check if the desired position is reachable
+        if distance > link1_length + link2_length:
+            print("Desired position is out of reach")
+
+
+        # Calculate the angles using trigonometry
+        theta2 = np.arccos((x**2 + y**2 + z**2 - link1_length**2 - link2_length**2) / (2 * link1_length * link2_length))
+        theta1 = np.arctan2(y, x) - np.arctan2(link2_length * np.sin(theta2), link1_length + link2_length * np.cos(theta2))
+
+        # Calculate the angle for the rotating base
+        theta_base = np.arctan2(y, x)
+
+        # Convert angles to degrees
+        theta_base = np.degrees(theta_base)
+        theta1 = np.degrees(theta1)
+        theta2 = np.degrees(theta2)
+        
+        ang_serv1 = theta1
+        ang_serv2 = theta2
+        ang_serv3 = theta_base
         #BLA BLA FORMULAS
         print("Movimientos de cada servo fueron planeados. Ejecutando...")
         comando = Int32MultiArray()  #
@@ -85,9 +117,56 @@ class RobotManipulatorPlanner(Node):
     def directa(self, grados_movidos):  #RODRI PON AQUI TUS ECUACIONES
         #grados_movidos es [serv1, serv2, serv3] son los cambios en cada comando
         #BLA BLA PROCESO DIRECTA (EN ESTE CASO SE HACE DIRECTA SOLO PARA QUE SE VEA EN LA INTERFAZ)
-        x_final = 1*grados_movidos[0]
-        y_final = 1*grados_movidos[1]
-        z_final = 1*grados_movidos[2]
+        theta_base = grados_movidos[2]
+        theta1 = grados_movidos[0]
+        theta2 = grados_movidos[1]
+        link1_length = 9  # Length of link 1
+        link2_length = 12  # Length of link 2
+
+
+        theta_base = np.radians(theta_base)
+        theta1 = np.radians(theta1)
+        theta2 = np.radians(theta2)
+
+        # DH parameters
+        d0 = 0
+        a0 = 0
+        alpha0 = theta_base
+
+        d1 = link1_length
+        a1 = 0
+        alpha1 = 0
+
+        d2 = 0
+        a2 = link2_length
+        alpha2 = 0
+
+        # Homogeneous transformation matrices
+        T0 = np.array([[np.cos(alpha0), -np.sin(alpha0), 0, a0],
+                       [np.sin(alpha0), np.cos(alpha0), 0, 0],
+                       [0, 0, 1, d0],
+                       [0, 0, 0, 1]])
+
+        T1 = np.array([[np.cos(theta1), -np.sin(theta1)*np.cos(alpha1), np.sin(theta1)*np.sin(alpha1), a1*np.cos(theta1)],
+                       [np.sin(theta1), np.cos(theta1)*np.cos(alpha1), -np.cos(theta1)*np.sin(alpha1), a1*np.sin(theta1)],
+                       [0, np.sin(alpha1), np.cos(alpha1), d1],
+                       [0, 0, 0, 1]])
+
+        T2 = np.array([[np.cos(theta2), -np.sin(theta2)*np.cos(alpha2), np.sin(theta2)*np.sin(alpha2), a2*np.cos(theta2)],
+                       [np.sin(theta2), np.cos(theta2)*np.cos(alpha2), -np.cos(theta2)*np.sin(alpha2), a2*np.sin(theta2)],
+                       [0, np.sin(alpha2), np.cos(alpha2), d2],
+                       [0, 0, 0, 1]])
+
+        # Forward kinematics
+        T = np.dot(T0, np.dot(T1, T2))
+
+        # Extract position and orientation
+        position = T[:3, 3]
+        orientation = T[:3, :3]
+                
+        x_final = position[0]
+        y_final = position[1]
+        z_final = position[2]
         
         coordenadas = Point() #
         coordenadas.x = float(x_final)
@@ -117,5 +196,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
-
